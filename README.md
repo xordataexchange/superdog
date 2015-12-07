@@ -18,6 +18,9 @@ Superdog is a library for managing strong cryptography in both development and t
 
 `superdog` supports AES encryption with CFB/CTR/GCM/OFB modes.
 
+### Versioning
+
+Superdog follows semver and is available under `gopkg.in` as `gopkg.in/xordataexchange/superdog.v1`
 
 ### Performance
 
