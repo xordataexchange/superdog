@@ -2,7 +2,7 @@
 [![GoDoc](https://godoc.org/github.com/xordataexchange/superdog?status.svg)](http://godoc.org/github.com/xordataexchange/superdog)
 
 
-Superdog is a library for managing strong cryptography in both development and test environments.  Superdog provides an elegant wrapper to the [Vault](https://www.vaultproject.io) API that allows you to manage your cryptographic keys in Vault using any code that implements the `KeyProvider` interface.  An implemention of the `KeyProvider` interface is provided for Vault, but others could be supported.
+Superdog is a library for managing strong cryptography in both development and test environments.  Superdog provides an elegant wrapper to the [Vault](https://www.vaultproject.io) API that allows you to manage your cryptographic keys using any code that implements the `KeyProvider` interface.  An implemention of the `KeyProvider` interface is provided for Vault, but others could be supported.
 
 ### Features
 
