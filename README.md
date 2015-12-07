@@ -12,6 +12,11 @@ Superdog is a library for managing strong cryptography in both development and t
 -  Versioned and Rotated IV/Salt - `SaltProvider` interface works the same as `KeyProvider` to allow development and testing access to the crypto libraries without requiring a live Key (Vault) server
 -  `Reencrypt` function to simplify key rotation, decrypts with given key, reencrypts with latest key
 
+### Cypher Suites
+
+`superdog` supports AES encryption with CFB/CTR/GCM/OFB modes.
+
+
 ### Performance
 
 On Go version 1.5.2 / Linux x86_64 kernel 4.2.5 on a quad-core i7:
@@ -50,5 +55,52 @@ if err != nil {
 	if err != nil {
 		// handle error
 	}
+
+```
+
+#### Production Usage
+By default, `superdog` uses the `DevKeyProvider` which is a static key with static IV.  This is extremely insecure, and SHOULD NOT ever be used in production.
+
+We reccommend using Go's [build tags](https://golang.org/pkg/go/build/) to enable strong cryptography in production usage.
+
+Create a file with your connection routines in the init() function.  Add the build tag `// +build production` to the top of that file.  Here's an incomplete example:
+
+```go
+// +build production
+
+package main
+import (
+	"github.com/xordataexchange/superdog"
+	"github.com/xordataexxchange/superdog/vault/hashi"
+	"github.com/hashicorp/vault/api"
+)
+
+// Assign each application a unique UUID
+// and use Vault's AppID authentication mechanism
+const (
+	appid = "SOME RANDOM UUID"
+)
+
+func init() {
+	user := os.Getenv("VAULT_USER")
+	vaultaddr := os.Getenv("VAULT_ADDRESS")
+	// TEST these for empty strings & handle appropriately in your code
+
+	cfg:= api.DefaultConfig()
+	cfg.Address = vaultaddr
+
+	vault, err := hashi.NewVault(cfg)
+	if err != nil {
+		// handle appropriately
+	}
+	err = vault.AuthAppID(appid, user)
+	if err != nil {
+		// handle appropriately
+	}
+
+	crypto.DefaultKeyProvider = vault
+	crypto.DefaultSaltProvider = vault
+
+}
 
 ```
