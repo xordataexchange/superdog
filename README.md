@@ -104,3 +104,5 @@ func init() {
 }
 
 ```
+Now compile your program with `go build -tags production` to include this code.  The `KeyProvider` will be set to use Vault.
+
