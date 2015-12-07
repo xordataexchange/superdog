@@ -21,38 +21,13 @@ Cypher Suites
 `superdog` supports AES encryption with CFB/CTR/GCM/OFB modes.
 
 
-
-
-#### Encryption
-```go
-val := []byte("encrypt me!")
-
-// use a key prefix to delineate different crypto keys
-// allowing you to use different keys for different parts of your application
-// or different fields of a database table, for example
-b, err := Encrypt("mykeyprefix", val, val)
-if err != nil {
-	// handle error
-}
-```
-#### Decryption
-```go
-	b := []byte["some crypt cypher text here"]
-	decrypted, err := Decrypt([]byte("mykeyprefix", b, b)
-	if err != nil {
-		// handle error
-	}
-
-```
-
-#### Production Usage
+Production Usage
 By default, `superdog` uses the `DevKeyProvider` which is a static key with static IV.  This is extremely insecure, and SHOULD NOT ever be used in production.
 
 We reccommend using Go's [build tags](https://golang.org/pkg/go/build/) to enable strong cryptography in production usage.
 
-Create a file with your connection routines in the init() function.  Add the build tag `// +build production` to the top of that file.  Here's an incomplete example:
+Create a file with your connection routines in the init() function.  Add the build tag `// +build production` to the top of that file.
 
-```go
 // +build production
 
 package main
@@ -90,7 +65,6 @@ func init() {
 
 }
 
-```
 Now compile your program with `go build -tags production` to include this code.  The `KeyProvider` will be set to use Vault.
 
 */
