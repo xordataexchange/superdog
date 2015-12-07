@@ -76,7 +76,7 @@ Create a file with your connection routines in the init() function.  Add the bui
 package main
 import (
 	"github.com/xordataexchange/superdog"
-	"github.com/xordataexxchange/superdog/vault/hashi"
+	"github.com/xordataexchange/superdog/vault/hashi"
 	"github.com/hashicorp/vault/api"
 )
 
