@@ -26,7 +26,7 @@ By default, `superdog` uses the `DevKeyProvider` which is a static key with stat
 
 We reccommend using Go's [build tags](https://golang.org/pkg/go/build/) to enable strong cryptography in production usage.
 
-Create a file with your connection routines in the init() function.  Add the build tag `// +build production` to the top of that file.
+Create a file with your connection routines in the init() function.  Add the build tag `// +build production` to the top of that file.  Incomplete example:
 
 	// +build production
 
