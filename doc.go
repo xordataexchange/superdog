@@ -28,42 +28,38 @@ We reccommend using Go's [build tags](https://golang.org/pkg/go/build/) to enabl
 
 Create a file with your connection routines in the init() function.  Add the build tag `// +build production` to the top of that file.
 
-// +build production
+	// +build production
 
-package main
-import (
-	"github.com/xordataexchange/superdog"
-	"github.com/xordataexxchange/superdog/vault/hashi"
-	"github.com/hashicorp/vault/api"
-)
+	package main
+	import (
+		"github.com/xordataexchange/superdog"
+		"github.com/xordataexxchange/superdog/vault/hashi"
+		"github.com/hashicorp/vault/api"
+	)
 
-// Assign each application a unique UUID
-// and use Vault's AppID authentication mechanism
-const (
-	appid = "SOME RANDOM UUID"
-)
+	// Assign each application a unique UUID
+	// and use Vault's AppID authentication mechanism
+	const (
+		appid = "SOME RANDOM UUID"
+	)
 
-func init() {
-	user := os.Getenv("VAULT_USER")
-	vaultaddr := os.Getenv("VAULT_ADDRESS")
-	// TEST these for empty strings & handle appropriately in your code
-
-	cfg:= api.DefaultConfig()
-	cfg.Address = vaultaddr
-
-	vault, err := hashi.NewVault(cfg)
-	if err != nil {
-		// handle appropriately
+	func init() {
+		user := os.Getenv("VAULT_USER")
+		vaultaddr := os.Getenv("VAULT_ADDRESS")
+		// TEST these for empty strings & handle appropriately in your code
+		cfg:= api.DefaultConfig()
+		cfg.Address = vaultaddr
+		vault, err := hashi.NewVault(cfg)
+		if err != nil {
+			// handle appropriately
+		}
+		err = vault.AuthAppID(appid, user)
+		if err != nil {
+			// handle appropriately
+		}
+		crypto.DefaultKeyProvider = vault
+		crypto.DefaultSaltProvider = vault
 	}
-	err = vault.AuthAppID(appid, user)
-	if err != nil {
-		// handle appropriately
-	}
-
-	crypto.DefaultKeyProvider = vault
-	crypto.DefaultSaltProvider = vault
-
-}
 
 Now compile your program with `go build -tags production` to include this code.  The `KeyProvider` will be set to use Vault.
 
