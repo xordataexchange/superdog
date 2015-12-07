@@ -3,12 +3,12 @@ See LICENSE file for license details
 Copyright (c) 2015 XOR Data Exchange, Inc.
 
 
-## Superdog - the Crypto library for Vault from Hashicorp
+Superdog - the Crypto library for Vault from Hashicorp
 
 
-Superdog is a library for managing strong cryptography in both development and test environments.  Superdog provides an elegant wrapper to the [Vault](https://www.vaultproject.io) API that allows you to manage your cryptographic keys in Vault using any code that implements the `KeyProvider` interface.  An implemention of the `KeyProvider` interface is provided for Vault, but others could be supported.
+Superdog is a library for managing strong cryptography in both development and test environments.  Superdog provides an elegant wrapper to the Vault(https://www.vaultproject.io) API that allows you to manage your cryptographic keys in Vault using any code that implements the `KeyProvider` interface.  An implemention of the `KeyProvider` interface is provided for Vault, but others could be supported.
 
-### Features
+Features
 
 -  Versioned Keys - Key version is stored as the first few bytes of the encrypted text
 -  Key Rotation - Rotate your keys safely, knowing that you'll always be able to decrypt older versionss
@@ -16,29 +16,12 @@ Superdog is a library for managing strong cryptography in both development and t
 -  Versioned and Rotated IV/Salt - `SaltProvider` interface works the same as `KeyProvider` to allow development and testing access to the crypto libraries without requiring a live Key (Vault) server
 -  `Reencrypt` function to simplify key rotation, decrypts with given key, reencrypts with latest key
 
-### Cypher Suites
+Cypher Suites
 
 `superdog` supports AES encryption with CFB/CTR/GCM/OFB modes.
 
 
-### Performance
 
-On Go version 1.5.2 / Linux x86_64 kernel 4.2.5 on a quad-core i7:
-
-```
-BenchmarkKeyEncryptCFB-8	 1000000	      2024 ns/op
-BenchmarkKeyEncryptCTR-8	  500000	      2748 ns/op
-BenchmarkKeyEncryptGCM-8	 1000000	      2381 ns/op
-BenchmarkKeyEncryptOFB-8	  500000	      2665 ns/op
-BenchmarkKeyDecryptCFB-8	10000000	       215 ns/op
-BenchmarkKeyDecryptCTR-8	 2000000	       898 ns/op
-BenchmarkKeyDecryptGCM-8	 3000000	       520 ns/op
-BenchmarkKeyDecryptOFB-8	 2000000	       817 ns/op
-```
-
-### Usage
-
-`go get -u github.com/xordataexchange/superdog/...`
 
 #### Encryption
 ```go
